@@ -3,19 +3,29 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@mkhatib/babel-plugin-glsl": "^1.1.0",
+    "@react-three/fiber": "^7.0.6",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "ace-builds": "^1.4.12",
+    "babel-plugin-glsl": "github:mkhatib/babel-plugin-glsl",
+    "firebase": "^9.0.2",
+    "glsl-noise": "^0.0.0",
     "react": "^17.0.2",
+    "react-ace": "^9.4.3",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
-    "web-vitals": "^1.0.1"
+    "short-uuid": "^4.2.0",
+    "three": "^0.132.2",
+    "web-vitals": "^1.0.1",
+    "zustand": "^3.5.10"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-app-rewired eject"
   },
   "eslintConfig": {
     "extends": [
@@ -34,5 +44,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "customize-cra": "^1.0.0",
+    "glslify": "^7.1.1",
+    "react-app-rewired": "^2.1.8"
   }
 }
