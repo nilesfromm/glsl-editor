@@ -12,17 +12,21 @@ function App() {
   const breakpoint = 800;
 
   React.useEffect(() => {
-    const handleWindowResize = () => setWidth(window.innerWidth)
+    const handleWindowResize = () => setWidth(window.innerWidth);
     window.addEventListener("resize", handleWindowResize);
     return () => window.removeEventListener("resize", handleWindowResize);
   }, []);
 
+  React.useEffect(() => {
+    // window.onerror = () => alert("test");
+  }, []);
+
   return (
-    <div id="wrapper">
-      {width < breakpoint ? <Mobile /> : "" }
-      <Viewer />
-      <Editor />
-    </div>
+      <div id="wrapper">
+        {width < breakpoint ? <Mobile /> : "" }
+        {width > breakpoint ? <Viewer /> : "" }
+        {width > breakpoint ? <Editor /> : "" }
+      </div>
   );
 }
 

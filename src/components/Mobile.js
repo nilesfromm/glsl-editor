@@ -4,7 +4,7 @@ import React from 'react'
 function Mobile() {
   return (
     <div id="mobileOverlay">
-      <p id="mobileType">Please visit this page on desktop to try the GLSL editor</p>
+      <p id="mobileType">Please visit this page on desktop to use the GLSL editor</p>
     </div>
   );
 }

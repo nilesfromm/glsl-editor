@@ -6,6 +6,7 @@
   "dependencies": {
     "@fontsource/ibm-plex-mono": "^4.5.1",
     "@mkhatib/babel-plugin-glsl": "^1.1.0",
+    "@react-three/drei": "^7.26.1",
     "@react-three/fiber": "^7.0.6",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
