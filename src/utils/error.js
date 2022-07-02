@@ -7,8 +7,6 @@ export function ErrorLog(gl) {
 	const { setError } = useStore();
 	originalConsoleError = console.error.bind(gl);
   
-  // console.log('testing shader', useStore((state) => state.errorLog.run));
-
 	console.error = function (
 		summary,
 		getError,
@@ -19,21 +17,7 @@ export function ErrorLog(gl) {
 		vertexErrors,
 		fragmentErrors
 	) {
-		// console.log(summary);
 		interceptConsoleError(summary, setError);
-		//     summary, getError, programParamCode, programParam,
-		//     programLogExample, programLog, vertexErrors, fragmentErrors
-		// );
-		// return originalConsoleError(
-		// 	summary,
-		// 	getError,
-		// 	programParamCode,
-		// 	programParam,
-		// 	programLogExample,
-		// 	programLog,
-		// 	vertexErrors,
-		// 	fragmentErrors
-		// );
 	};
 }
 
@@ -42,7 +26,7 @@ function interceptConsoleError(log, errorLog) {
 		console.warn("No WebGL content.");
 		return;
 	}
-	let details, error, i, line, lines, message, shader, _i, _len; //status,
+	let details, error, i, lines, message, shader, _i, _len;
 	lines = log.split("\n");
 	// filters out THREE.js handled errors in the raw log
 
@@ -79,13 +63,11 @@ function interceptConsoleError(log, errorLog) {
 	if (details.length < 4) {
 		console.log("Unable to parse error. (less than 4)");
 	}
-  // alert(error);
-  // alert(parseInt(details[2])+7]);
 	details[2] = parseInt(details[2]) - 59 - 68 * (shader === "VERTEX" ? 0 : 1);
 	message = details.splice(0).join(":");
 
 	let e = {
-    run:      false,
+    	run:      false,
 		shader:   shader,
 		error:    message,
 	};

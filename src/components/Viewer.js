@@ -11,8 +11,6 @@ import Error from "./Error";
 import { ErrorLog } from "../utils/error";
 
 function Geo(props) {
-	// This reference will give us direct access to the THREE.Mesh object
-	// const boxRef = useRef()
   const { vertFlat, vert, frag } = useStore()
   const flat = useStore((state) => state.toolbar.flat);
   const controls = useThree(state => state.controls)
