@@ -12,6 +12,7 @@ import { ReactComponent as BtGrid } from "../imgs/grid.svg";
 import { ReactComponent as BtDownload } from "../imgs/download.svg";
 import { ReactComponent as BtUpload } from "../imgs/upload.svg";
 import { ReactComponent as BtOrbit } from "../imgs/orbit.svg";
+import { ReactComponent as BtScreenShot } from "../imgs/screenShot.svg";
 
 function SubMenu(props) {
 	const [showSubMenu, setShowSubMenu] = useState(false);
@@ -69,6 +70,21 @@ function Button(props) {
 				props.control(!props.current);
 				console.log(" -> orbit is", !props.current);
 				break;
+			case "screenShot":
+
+				//	!!! this works on first load, but after error and render restarts it can't reach
+				//		canvas data, current code works but needs 'gl={{ preserveDrawingBuffer: true }}' 
+				//		in canvas, which might be bad for performance???
+				// const c = props.canvasData;
+				// c.gl.render(c.scene, c.camera);
+				// const screenShot = c.gl.domElement.toDataURL()
+				// props.children.ref.current.href = screenShot;
+
+				const image = props.canvasRef.current.toDataURL();
+				props.children.ref.current.href = image;
+
+				console.log("screenShot button click");
+				break;
 			case "download":
 				console.log("download button click");
 				break;
@@ -94,14 +110,13 @@ function Button(props) {
 			id={props.name}
 		>
 			{props.children}
-			{/* {props.name} */}
 		</div>
 	);
 }
 
 function ToolBar(props) {
 	const { setGeometry, setFlat, setGrid, setOrbit } = useStore();
-
+	const downloadRef = useRef();
 	// let grid = useStore(state => state.toolbar.grid);
 
 	return (
@@ -167,12 +182,27 @@ function ToolBar(props) {
 			>
 				<BtGrid />
 			</Button>
-			<Button name="download">
+			<Button
+				name="screenShot"
+				canvasRef={props.canvasRef}
+				// canvasData={props.canvasData}
+			>
+				<a 
+					href="download"
+					ref={downloadRef}
+					download="shaderScreenshot.png"
+				>
+					<BtScreenShot />
+				</a>
+			</Button>
+			{/* <Button 
+				name="download"
+			>	
 				<BtDownload />
 			</Button>
 			<Button name="upload">
 				<BtUpload />
-			</Button>
+			</Button> */}
 		</div>
 	);
 }

@@ -1,6 +1,7 @@
 import '../App.css';
 import AceEditor from "react-ace";
 import { useStore } from '../utils/store'
+import { useResize } from '../utils/resize';
 import 'ace-builds/webpack-resolver';
 import 'ace-builds/src-noconflict/ext-language_tools';
 import "ace-builds/src-noconflict/mode-glsl";
@@ -11,10 +12,11 @@ function Editor() {
     // const vert = useStore(state => state.vert);
     // const vertFlat = useStore((state) => state.vertFlat);
     const flat = useStore((state) => state.toolbar.flat);
+    const { initResize } = useResize('vertical');
 
     return (
         <div id="editPanel">
-            <div className="editorWrap">
+            <div id="vertPanel" className="editorWrap">
                 <p className="editorTitle">Vertex Shader</p>
                 <AceEditor
                     style={{
@@ -41,7 +43,8 @@ function Editor() {
                     }}
                 />
             </div>
-            <div className="editorWrap">
+            <div id="hBreak" className='Break' onMouseDown={ initResize } />
+            <div id="fragPanel" className="editorWrap">
                 <p className="editorTitle">Fragment Shader</p>
                 <AceEditor
                     mode="glsl"

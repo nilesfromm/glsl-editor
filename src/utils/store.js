@@ -1,20 +1,28 @@
 import create from "zustand"
 
-// String.prototype.dedent = function() {
-    
-//     return this.split('\n').map(line => line.replace(/^ +/gm, '')).join('\n');
-    
-    
-// }
-
 const detent = (_string)=>{
-
 	const regex = new RegExp(`^[ \\t]{4}`, 'gm');
-    
 	return _string.split('\n').map(line => line.replace(regex, '')).join('\n');
 }
 
 export const useStore = create(set => ({
+
+    //---------------------------------------------------------------------------------------------------
+    //Resize Data (%)
+    resize: {
+        horizontal: 66,
+        vertical: 50,
+    },
+
+    setHorizontal: (h)=>{
+        set(state=>state.resize.horizontal = h);
+        console.log("set horizontal size to:", h);
+    },
+
+    setVertical: (h)=>{
+        set(state=>state.resize.vertical = h);
+        console.log("set vertical size to:", h);
+    },
 
     //---------------------------------------------------------------------------------------------------
     //Tool Bar Data

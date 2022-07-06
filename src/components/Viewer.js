@@ -75,24 +75,52 @@ function Geo(props) {
 	);
 }
 
+// const screenShot = (e) => {
+// 	// const image = e.current.toDataURL();
+// 	console.log('test', e);
+// 	e.gl.render(e.scene, e.camera)
+//   	const screenshot = e.gl.domElement.toDataURL()
+// 	console.log(screenshot);
+// }
+
+const FancyButton = React.forwardRef((props, ref) => (
+  <button ref={ref} className="FancyButton">
+    {props.children}
+  </button>
+));
 function Viewer() {
 	const currentGeo = useStore((state) => state.toolbar.geometry);
 	const currentOrbit = useStore((state) => state.toolbar.orbit);
 	const flat = useStore((state) => state.toolbar.flat);
 	const currentGrid = useStore((state) => state.toolbar.grid);
-  const orbitRef = useRef();
+  	const orbitRef = useRef();
+	const canvasRef = useRef();
+	//onClick={() => screenShot(canvasRef)}
+	// let canvasData = {
+	// 	gl: null,
+	// 	scene: null,
+	// 	camera: null
+	// }
 	return (
 		<div id="viewPanel">
 			<div id="canvasContainer">
 				{useStore((state) => state.errorLog.run) ? "" : <Error />}
 				<ToolBar 
-          orbitRef={orbitRef}
-        />
+          			orbitRef={orbitRef}
+					canvasRef={canvasRef}
+					// canvasData={canvasData}
+        		/>
 				<Canvas
-					camera={{
-						position: [0, 3, 5],
-					}}
+					ref={canvasRef}
+					camera={{ position: [0, 3, 5] }}
 					dpr={window.devicePixelRatio}
+					gl={{ preserveDrawingBuffer: true }} 
+					// onCreated={(state) => {
+					// 	const {gl, scene, camera } = state;
+					// 	canvasData.gl = gl;
+					// 	canvasData.scene= scene;
+					// 	canvasData.camera = camera;
+					// }}
 				>
 					<Geo position={[0, 0, 0]} geo={currentGeo} flat={flat}/>
 					<gridHelper
@@ -100,11 +128,11 @@ function Viewer() {
 						visible={flat ? false : currentGrid}
 					/>
 					<OrbitControls
-            ref={orbitRef}
+            			ref={orbitRef}
 						enablePan={false}
 						enableZoom={flat ? false : currentOrbit}
 						enableRotate={flat ? false : currentOrbit}
-            makeDefault
+            			makeDefault
 					/>
 				</Canvas>
 			</div>

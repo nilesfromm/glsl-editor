@@ -1,5 +1,6 @@
 import './App.css';
-import React from 'react'
+import { useState, useEffect, useRef } from 'react'
+import { useResize } from './utils/resize';
 import Editor from './components/Editor';
 import Viewer from './components/Viewer';
 import Mobile from './components/Mobile';
@@ -8,23 +9,22 @@ import "@fontsource/ibm-plex-mono/400.css"
 import "@fontsource/ibm-plex-mono/300.css"
 
 function App() {
-  const [width, setWidth] = React.useState(window.innerWidth);
+  const [width, setWidth] = useState(window.innerWidth);
   const breakpoint = 800;
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleWindowResize = () => setWidth(window.innerWidth);
     window.addEventListener("resize", handleWindowResize);
     return () => window.removeEventListener("resize", handleWindowResize);
   }, []);
 
-  React.useEffect(() => {
-    // window.onerror = () => alert("test");
-  }, []);
+  const { initResize } = useResize('horizontal');
 
   return (
-      <div id="wrapper">
+      <div id='wrapper'>
         {width < breakpoint ? <Mobile /> : "" }
         {width > breakpoint ? <Viewer /> : "" }
+        {width > breakpoint ? <div id='vBreak' className='Break' onMouseDown={ initResize } /> : "" }
         {width > breakpoint ? <Editor /> : "" }
       </div>
   );
