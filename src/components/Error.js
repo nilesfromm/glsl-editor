@@ -1,5 +1,5 @@
 import '../App.css';
-import React, { useRef, useState} from 'react'
+import React from 'react'
 import { useStore } from '../utils/store'
 import { ReactComponent as ErrorIcon } from '../imgs/error.svg';
 

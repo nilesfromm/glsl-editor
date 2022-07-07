@@ -16,12 +16,10 @@ export const useStore = create(set => ({
 
     setHorizontal: (h)=>{
         set(state=>state.resize.horizontal = h);
-        console.log("set horizontal size to:", h);
     },
 
     setVertical: (h)=>{
         set(state=>state.resize.vertical = h);
-        console.log("set vertical size to:", h);
     },
 
     //---------------------------------------------------------------------------------------------------

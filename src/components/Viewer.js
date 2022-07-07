@@ -34,6 +34,8 @@ function Geo(props) {
 				return <sphereGeometry args={[2, 32, 32]} />;
 			case "cylinder":
 				return <cylinderGeometry args={[2, 2, 3, 32]} />;
+			case "torus":
+				return <torusGeometry args={[1.5, 1, 24, 32]} />;
 			case "plane":
 			case "2d":
 				return <planeGeometry args={[5, 5, 16, 16]} doublesided={"true"} />;

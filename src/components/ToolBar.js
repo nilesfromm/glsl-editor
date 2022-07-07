@@ -6,6 +6,7 @@ import { ReactComponent as BtGeoCube } from "../imgs/cube.svg";
 import { ReactComponent as BtGeoPlane } from "../imgs/plane.svg";
 import { ReactComponent as BtGeoSphere } from "../imgs/sphere.svg";
 import { ReactComponent as BtGeoCylinder } from "../imgs/cylinder.svg";
+import { ReactComponent as BtGeoTorus } from "../imgs/torus.svg";
 import { ReactComponent as BtGeoFrag } from "../imgs/frag.svg";
 
 import { ReactComponent as BtGrid } from "../imgs/grid.svg";
@@ -48,6 +49,7 @@ function Button(props) {
 			case "cube":
 			case "sphere":
 			case "cylinder":
+			case "torus":
 			case "plane":
 				props.control(param);
 				props.flat(false);
@@ -148,6 +150,15 @@ function ToolBar(props) {
 					orbitRef={props.orbitRef}
 				>
 					<BtGeoCylinder />
+				</Button>
+				<Button
+					name="torus"
+					current={useStore((state) => state.toolbar.geometry)}
+					control={setGeometry}
+					flat={setFlat}
+					orbitRef={props.orbitRef}
+				>
+					<BtGeoTorus />
 				</Button>
 				<Button
 					name="plane"

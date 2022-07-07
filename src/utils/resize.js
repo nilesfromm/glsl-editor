@@ -28,12 +28,22 @@ export const useResize = (axis) => {
             const newPixelVal = ((window.innerWidth-40)*(dims.width/100)-drag);
             resizeVal = ((newPixelVal/(window.innerWidth-40)) * 100);
         
+            if(resizeVal > 90){
+                resizeVal = 90;
+            } else if(resizeVal < 10){
+                resizeVal = 10;
+            }
             resizeElement.style.width = resizeVal + '%';
         } else if (axis === 'vertical'){
             const drag = (coords.y - event.clientY);
             const newPixelVal = ((window.innerHeight-40)*(dims.height/100)-drag);
             resizeVal = ((newPixelVal/(window.innerHeight-40)) * 100);
         
+            if(resizeVal > 90){
+                resizeVal = 95;
+            } else if(resizeVal < 10){
+                resizeVal = 5;
+            }
             resizeElement.style.height = resizeVal + '%';
         }
         window.dispatchEvent(new Event('resize'));
