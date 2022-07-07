@@ -39,9 +39,9 @@ export const useResize = (axis) => {
             const newPixelVal = ((window.innerHeight-40)*(dims.height/100)-drag);
             resizeVal = ((newPixelVal/(window.innerHeight-40)) * 100);
         
-            if(resizeVal > 90){
+            if(resizeVal > 95){
                 resizeVal = 95;
-            } else if(resizeVal < 10){
+            } else if(resizeVal < 5){
                 resizeVal = 5;
             }
             resizeElement.style.height = resizeVal + '%';

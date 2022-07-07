@@ -7,6 +7,9 @@ import Mobile from './components/Mobile';
 import "@fontsource/ibm-plex-mono/500.css"
 import "@fontsource/ibm-plex-mono/400.css"
 import "@fontsource/ibm-plex-mono/300.css"
+import "@fontsource/ibm-plex-mono/500-italic.css"
+import "@fontsource/ibm-plex-mono/400-italic.css"
+import "@fontsource/ibm-plex-mono/300-italic.css"
 
 function App() {
   const [width, setWidth] = useState(window.innerWidth);

@@ -2,6 +2,7 @@ import "../App.css";
 import React, { useRef, useState } from "react";
 import { useStore } from "../utils/store";
 
+import { ReactComponent as BtSettings } from "../imgs/settings.svg";
 import { ReactComponent as BtGeoCube } from "../imgs/cube.svg";
 import { ReactComponent as BtGeoPlane } from "../imgs/plane.svg";
 import { ReactComponent as BtGeoSphere } from "../imgs/sphere.svg";
@@ -17,27 +18,50 @@ import { ReactComponent as BtScreenShot } from "../imgs/screenShot.svg";
 
 function SubMenu(props) {
 	const [showSubMenu, setShowSubMenu] = useState(false);
+	const smRef = useRef();
 	function MouseOver(event) {
 		setShowSubMenu(true);
 	}
 	function MouseOut(event) {
 		setShowSubMenu(false);
 	}
-	const openWidth =
-		props.children.length * 25 + (props.children.length - 1) * 5;
 	return (
-		<div
-			className="tb_submenu"
-			onMouseEnter={MouseOver}
-			onMouseLeave={MouseOut}
-			onClick={() => setShowSubMenu(true)}
+		<div 
+			className="tb_submenuWrapper"
 			style={{
-				width: showSubMenu ? openWidth + "px" : "25px",
-			}}
-		>
-			{props.children}
+				width: showSubMenu ? smRef.current.clientWidth + 'px' : "25px",
+			}}>
+			<div
+				ref={smRef}
+				className="tb_submenu"
+				onMouseEnter={ props.interaction==='hover'? MouseOver : null }
+				onMouseLeave={ props.interaction==='hover'? MouseOut : null }
+				onClick={ props.interaction==='click'? () => setShowSubMenu(!showSubMenu) : null}
+			>
+				{props.children}
+			</div>
 		</div>
 	);
+}
+
+function Uniform(props){
+	return(
+		<div className="tb_uniform">
+			<div className="tb_uniformType">{props.type}&nbsp;</div>
+			<div className="tb_uniformName">{props.name}</div>
+			<div>
+				({props.value.map((v,i)=>{
+					let out;
+					if(props.value.length-i > 1){
+						out = v + ',';
+					} else {
+						out = v;
+					}
+					return <span key={i} className="tb_uniformVal">{out}</span>
+				})})
+			</div>
+		</div>
+	)
 }
 
 function Button(props) {
@@ -123,42 +147,44 @@ function ToolBar(props) {
 
 	return (
 		<div id="tb_wrapper">
-			<SubMenu>
+			<SubMenu interaction='click'>
+				<Uniform
+					type="f"
+					name="time"
+					value={[0.22]}
+				/>
+				<Uniform
+					type="v3"
+					name="colorStart"
+					value={[0.1,0.2,0.3]}
+				/>
+				<Uniform
+					type="v3"
+					name="colorStart"
+					value={[0.1,0.2,0.3]}
+				/>
+				<Uniform
+					type="v3"
+					name="colorStart"
+					value={[0.1,0.2,0.3]}
+				/>
 				<Button
-					name="cube"
-					current={useStore((state) => state.toolbar.geometry)}
-					control={setGeometry}
-					flat={setFlat}
-					orbitRef={props.orbitRef}
+					name="settings"
+					current={false}
+					// control={setOrbit}
 				>
-					<BtGeoCube />
+					<BtSettings />
 				</Button>
+			</SubMenu>
+			<SubMenu interaction='hover'>
 				<Button
-					name="sphere"
+					name="2d"
 					current={useStore((state) => state.toolbar.geometry)}
 					control={setGeometry}
 					flat={setFlat}
 					orbitRef={props.orbitRef}
 				>
-					<BtGeoSphere />
-				</Button>
-				<Button
-					name="cylinder"
-					current={useStore((state) => state.toolbar.geometry)}
-					control={setGeometry}
-					flat={setFlat}
-					orbitRef={props.orbitRef}
-				>
-					<BtGeoCylinder />
-				</Button>
-				<Button
-					name="torus"
-					current={useStore((state) => state.toolbar.geometry)}
-					control={setGeometry}
-					flat={setFlat}
-					orbitRef={props.orbitRef}
-				>
-					<BtGeoTorus />
+					<BtGeoFrag />
 				</Button>
 				<Button
 					name="plane"
@@ -170,13 +196,40 @@ function ToolBar(props) {
 					<BtGeoPlane />
 				</Button>
 				<Button
-					name="2d"
+					name="torus"
 					current={useStore((state) => state.toolbar.geometry)}
 					control={setGeometry}
 					flat={setFlat}
 					orbitRef={props.orbitRef}
 				>
-					<BtGeoFrag />
+					<BtGeoTorus />
+				</Button>
+				<Button
+					name="cylinder"
+					current={useStore((state) => state.toolbar.geometry)}
+					control={setGeometry}
+					flat={setFlat}
+					orbitRef={props.orbitRef}
+				>
+					<BtGeoCylinder />
+				</Button>
+				<Button
+					name="sphere"
+					current={useStore((state) => state.toolbar.geometry)}
+					control={setGeometry}
+					flat={setFlat}
+					orbitRef={props.orbitRef}
+				>
+					<BtGeoSphere />
+				</Button>
+				<Button
+					name="cube"
+					current={useStore((state) => state.toolbar.geometry)}
+					control={setGeometry}
+					flat={setFlat}
+					orbitRef={props.orbitRef}
+				>
+					<BtGeoCube />
 				</Button>
 			</SubMenu>
 			<Button
