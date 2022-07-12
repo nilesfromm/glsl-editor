@@ -1,5 +1,5 @@
 import "../App.css";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useStore } from "../utils/store";
 
 import { ReactComponent as BtSettings } from "../imgs/settings.svg";
@@ -25,6 +25,16 @@ function SubMenu(props) {
 	function MouseOut(event) {
 		setShowSubMenu(false);
 	}
+	function MouseClick(event) {
+		for (let t of event.nativeEvent.path){
+			if(t.nodeName === 'DIV'){
+				if(t.className === 'tb_button'){
+					setShowSubMenu(!showSubMenu)
+				}
+				break;
+			}
+		}
+	}
 	return (
 		<div 
 			className="tb_submenuWrapper"
@@ -36,7 +46,7 @@ function SubMenu(props) {
 				className="tb_submenu"
 				onMouseEnter={ props.interaction==='hover'? MouseOver : null }
 				onMouseLeave={ props.interaction==='hover'? MouseOut : null }
-				onClick={ props.interaction==='click'? () => setShowSubMenu(!showSubMenu) : null}
+				onClick={ props.interaction==='click'? MouseClick : null}
 			>
 				{props.children}
 			</div>
@@ -51,16 +61,59 @@ function Uniform(props){
 			<div className="tb_uniformName">{props.name}</div>
 			<div>
 				({props.value.map((v,i)=>{
-					let out;
-					if(props.value.length-i > 1){
-						out = v + ',';
-					} else {
-						out = v;
-					}
-					return <span key={i} className="tb_uniformVal">{out}</span>
+					return <UniformVal key={i} v={v} i={i} l={props.value.length} readonly={props.readonly} />;
 				})})
 			</div>
 		</div>
+	)
+}
+
+function UniformVal(props){
+	const [value, setValue] = useState(props.v);
+	const [coords, setCoords] = useState({ x: 0, y: 0 });
+  	const [width, setWidth] = useState(0);
+	const span = useRef();
+
+	// const initMove = (event) => {
+	// 	setCoords({ x: event.clientX, y: event.clientY })
+	// 	// setDims({ width: resize.horizontal, height: resize.vertical })
+	// }
+	
+	useEffect(() => {
+		setWidth(span.current.offsetWidth);
+	}, [value, width]);
+
+	const startDrag = (event) => {
+		event.preventDefault();
+		const shift = event.shiftKey ? 40 : 400;
+		const drag = (coords.y - event.clientY) / shift;
+		setValue((Number(value) + Number(drag)).toFixed(2));
+	}
+	const stopDrag = () => {
+		document.removeEventListener('mousemove', startDrag, false)
+        document.removeEventListener('mouseup', stopDrag, false)
+	}
+	const click = (event) => {
+		// event.preventDefault();
+		setCoords({ x: event.clientX, y: event.clientY })
+		document.addEventListener('mousemove', startDrag, false)
+        document.addEventListener('mouseup', stopDrag, false)
+	}
+	const handleChange = event => {
+		const result = event.target.value
+			.replace(/[^0-9\.]/g, '')
+			.replace(/\./, "x")
+  			.replace(/\./g, "")
+  			.replace(/x/, ".");
+		setValue(result);
+	};
+
+	return(
+		<>
+			<span className="tb_uniformValTemp" ref={span}>{value}</span>
+			<input type="text" value={value} style={{ width }} onChange={handleChange} className="tb_uniformVal" readOnly={props.readonly} onMouseDown={props.readonly ? null : click} />
+			{props.l - props.i > 1 ? <span>,</span> : null}
+		</>
 	)
 }
 
@@ -117,6 +170,9 @@ function Button(props) {
 			case "upload":
 				console.log("upload button click");
 				break;
+			case "settings":
+				console.log("settings button click");
+				break;
 			default:
 				console.log("error: unknown button click");
 				break;
@@ -152,6 +208,7 @@ function ToolBar(props) {
 					type="f"
 					name="time"
 					value={[0.22]}
+					readonly={true}
 				/>
 				<Uniform
 					type="v3"
@@ -166,7 +223,7 @@ function ToolBar(props) {
 				<Uniform
 					type="v3"
 					name="colorStart"
-					value={[0.1,0.2,0.3]}
+					value={[0.155,0.2,0.3]}
 				/>
 				<Button
 					name="settings"

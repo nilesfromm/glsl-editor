@@ -124,7 +124,6 @@
   overflow: hidden;
 }
 
-
 .tb_submenu{
   /* background-color: coral; */
   width: max-content;
@@ -179,7 +178,6 @@
   outline: solid 1px #E0E0E0;
   outline-offset: -1px;
   overflow: hidden;
-  cursor: pointer;
   transition: background-color 0.25s;
   right: 0px;
   display: flex;
@@ -204,6 +202,28 @@
 }
 .tb_uniformVal{
   color: #F58720;
+  cursor: ns-resize;
+  text-decoration: none;
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  border: none;
+  padding: 0;
+}
+.tb_uniformVal:focus{
+  outline: none;
+  border: none;
+  padding: 0;
+  background-color: #E0E0E0;
+}
+.tb_uniformValTemp{
+  position: fixed;
+  opacity: 0;
+  z-index: -100;
+  white-space: nowrap;
+  min-width: 1px;
+  font-size: 12px;
 }
 
 #editPanel{
