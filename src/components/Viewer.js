@@ -29,16 +29,16 @@ function Geo(props) {
 	function switchGeo(param) {
 		switch (param) {
 			case "cube":
-				return <boxGeometry args={[3, 3, 3]} />;
+				return <boxGeometry args={[3, 3, 3, 32, 32, 32]} />;
 			case "sphere":
 				return <sphereGeometry args={[2, 32, 32]} />;
 			case "cylinder":
-				return <cylinderGeometry args={[2, 2, 3, 32]} />;
+				return <cylinderGeometry args={[2, 2, 3, 32, 32]} />;
 			case "torus":
 				return <torusGeometry args={[1.5, 1, 24, 32]} />;
 			case "plane":
 			case "2d":
-				return <planeGeometry args={[5, 5, 16, 16]} doublesided={"true"} />;
+				return <planeGeometry args={[5, 5, 32, 32]} doublesided={"true"} />;
 			default:
 				console.log("error: unknown button click");
 				break;
@@ -85,11 +85,6 @@ function Geo(props) {
 // 	console.log(screenshot);
 // }
 
-const FancyButton = React.forwardRef((props, ref) => (
-  <button ref={ref} className="FancyButton">
-    {props.children}
-  </button>
-));
 function Viewer() {
 	const currentGeo = useStore((state) => state.toolbar.geometry);
 	const currentOrbit = useStore((state) => state.toolbar.orbit);
@@ -103,6 +98,9 @@ function Viewer() {
 	// 	scene: null,
 	// 	camera: null
 	// }
+	console.log('loading viewer:')
+	let store = useStore((state)=>state.toolbar);
+	console.log(store);
 	return (
 		<div id="viewPanel">
 			<div id="canvasContainer">
@@ -114,7 +112,7 @@ function Viewer() {
         		/>
 				<Canvas
 					ref={canvasRef}
-					camera={{ position: [0, 3, 5] }}
+					camera={{ position: flat ? [0,0,3.5] : [0, 3, 5] }}
 					dpr={window.devicePixelRatio}
 					gl={{ preserveDrawingBuffer: true }} 
 					// onCreated={(state) => {

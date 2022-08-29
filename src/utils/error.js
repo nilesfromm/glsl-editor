@@ -1,11 +1,11 @@
 import React from "react";
 import { useStore } from "../utils/store";
 
-let originalConsoleError;
+// let originalConsoleError;
 
 export function ErrorLog(gl) {
 	const { setError } = useStore();
-	originalConsoleError = console.error.bind(gl);
+	// originalConsoleError = console.error.bind(gl);
   
 	console.error = function (
 		summary,

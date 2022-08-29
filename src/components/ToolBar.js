@@ -203,7 +203,7 @@ function ToolBar(props) {
 
 	return (
 		<div id="tb_wrapper">
-			<SubMenu interaction='click'>
+			{/* <SubMenu interaction='click'>
 				<Uniform
 					type="f"
 					name="time"
@@ -232,7 +232,7 @@ function ToolBar(props) {
 				>
 					<BtSettings />
 				</Button>
-			</SubMenu>
+			</SubMenu> */}
 			<SubMenu interaction='hover'>
 				<Button
 					name="2d"

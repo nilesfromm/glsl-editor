@@ -5,50 +5,67 @@ const detent = (_string)=>{
 	return _string.split('\n').map(line => line.replace(regex, '')).join('\n');
 }
 
+const getLocalStorage = (key) => JSON.parse(window.localStorage.getItem(key));
+const setLocalStorage = (key, value) => window.localStorage.setItem(key, JSON.stringify(value));
+
 export const useStore = create(set => ({
 
     //---------------------------------------------------------------------------------------------------
-    //Resize Data (%)
+    //Resize UI(%)
     resize: {
-        horizontal: 66,
-        vertical: 50,
+        horizontal: getLocalStorage("resizeHorizontal") || 66,
+        vertical:   getLocalStorage("resizeVertical")   || 50,
     },
 
-    setHorizontal: (h)=>{
-        set(state=>state.resize.horizontal = h);
+    setHorizontal: (v)=>{
+        set((state) => {
+            setLocalStorage("resizeHorizontal", v);
+            state.resize.horizontal = v;
+        })
     },
 
-    setVertical: (h)=>{
-        set(state=>state.resize.vertical = h);
+    setVertical: (v)=>{
+        set((state) => {
+            setLocalStorage("resizeVertical", v);
+            state.resize.vertical = v;
+        })
     },
 
     //---------------------------------------------------------------------------------------------------
     //Tool Bar Data
     toolbar: {
-        geometry:   "cube",
-        flat:       false,  
-        grid:       true,
-        orbit:      true,
+        geometry:   getLocalStorage("tbGeometry") || "cube",
+        flat:       getLocalStorage("tbFlat") || false,  
+        grid:       Object.keys(window.localStorage).includes("tbGrid") ? getLocalStorage("tbGrid") : true,
+        orbit:      Object.keys(window.localStorage).includes("tbOrbit") ? getLocalStorage("tbOrbit") : true,
     },
 
     setGeometry: (v)=>{
-        set(state=>state.toolbar.geometry = v);
-        console.log("set tb geometry to:", v);
+        set((state) => {
+            setLocalStorage("tbGeometry", v);
+            state.toolbar.geometry = v;
+        });
     },
 
     setFlat: (v)=>{
-        set(state=>state.toolbar.flat = v);
-        console.log("set tb flat to:", v);
+        set((state) => {
+            setLocalStorage("tbFlat", v);
+            state.toolbar.flat = v;
+        });
     },
 
     setGrid: (v)=>{
-        set(state=>state.toolbar.grid = v);
-        console.log("set tb grid to:", v);
+        set((state) => {
+            setLocalStorage("tbGrid", v);
+            state.toolbar.grid = v;
+        });
     },
 
     setOrbit: (v)=>{
-        set(state=>state.toolbar.orbit = v);
-        console.log("set tb orbit to:", v);
+        set((state) => {
+            setLocalStorage("tbOrbit", v);
+            state.toolbar.orbit = v;
+        });
     },
 
     //---------------------------------------------------------------------------------------------------
@@ -80,7 +97,7 @@ export const useStore = create(set => ({
         gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
     }`),         
     
-    vert:
+    vert: getLocalStorage("vert") ||
     detent(
     `precision mediump float;
     precision mediump int;
@@ -117,7 +134,7 @@ export const useStore = create(set => ({
       gl_Position = projectionMatrix * modelViewMatrix * vec4(pos,1.0);
     }`),
 
-    frag: 
+    frag: getLocalStorage("frag") ||
     detent(
     `precision mediump float;
     uniform float time;
@@ -139,19 +156,22 @@ export const useStore = create(set => ({
     setVertFlat: (v)=>{
         set(state=>state.vertFlat = v);
         set(state=>state.errorLog.run = true);
-        // console.log(JSON.stringify(v));
     },
 
     setVert: (v)=>{
-        set(state=>state.vert = v);
+        set((state) => {
+            setLocalStorage("vert", v);
+            state.vert = v;
+        });
         set(state=>state.errorLog.run = true);
-        // console.log(JSON.stringify(v));
     },
 
     setFrag: (v)=>{
-        set(state=>state.frag = v);
+        set((state) => {
+            setLocalStorage("frag", v);
+            state.frag = v;
+        });
         set(state=>state.errorLog.run = true);
-        // console.log(JSON.stringify(v));
     },
 
 }))
