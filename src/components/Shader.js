@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { extend } from '@react-three/fiber'
 import guid from 'short-uuid'
-import glsl from 'babel-plugin-glsl/macro'
+// import glsl from 'babel-plugin-glsl/macro'
 
 class WaveMaterial extends THREE.ShaderMaterial {
   constructor(props) {

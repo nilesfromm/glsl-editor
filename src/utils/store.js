@@ -13,20 +13,20 @@ export const useStore = create(set => ({
     //---------------------------------------------------------------------------------------------------
     //Resize UI(%)
     resize: {
-        horizontal: getLocalStorage("resizeHorizontal") || 66,
-        vertical:   getLocalStorage("resizeVertical")   || 50,
+        horizontal: 66,
+        vertical:   50,
     },
 
     setHorizontal: (v)=>{
         set((state) => {
-            setLocalStorage("resizeHorizontal", v);
+            // setLocalStorage("resizeHorizontal", v);
             state.resize.horizontal = v;
         })
     },
 
     setVertical: (v)=>{
         set((state) => {
-            setLocalStorage("resizeVertical", v);
+            // setLocalStorage("resizeVertical", v);
             state.resize.vertical = v;
         })
     },

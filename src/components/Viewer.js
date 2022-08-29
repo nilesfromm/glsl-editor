@@ -1,6 +1,6 @@
 import "../App.css";
 // import * as THREE from 'three'
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useStore } from "../utils/store";
 import { WaveMaterial } from "./Shader";
@@ -13,9 +13,9 @@ import { ErrorLog } from "../utils/error";
 function Geo(props) {
   const { vertFlat, vert, frag } = useStore()
   const flat = useStore((state) => state.toolbar.flat);
-  const controls = useThree(state => state.controls)
+//   const controls = useThree(state => state.controls)
 	const matRef = useRef();
-	const [hovered, setHover] = useState(false);
+	// const [hovered, setHover] = useState(false);
 	// const [active, setActive] = useState(false)
 	// const [errors, setErrors] = useState([])
 	// useFrame((state, delta) => (boxRef.current.rotation.y))
@@ -99,7 +99,7 @@ function Viewer() {
 	// 	camera: null
 	// }
 	console.log('loading viewer:')
-	let store = useStore((state)=>state.toolbar);
+	let store = useStore((state)=>state);
 	console.log(store);
 	return (
 		<div id="viewPanel">

@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from 'react'
 import { useStore } from './store'
 
 export const useResize = (axis) => {
+    console.log('resizing');
+    console.log(useStore());
   const { resize, setHorizontal, setVertical } = useStore();
   const isMounted = useRef(false);
   const [coords, setCoords] = useState({ x: Infinity, y: Infinity })
@@ -67,7 +69,7 @@ export const useResize = (axis) => {
         document.getElementById('vertPanel').style.height = resize.vertical + '%';
     }
 
-  }, [dims, coords])
+  }, [axis, coords, dims, resize, setHorizontal, setVertical])
 
   return { initResize }
 }

@@ -1,5 +1,5 @@
 import './App.css';
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { useResize } from './utils/resize';
 import Editor from './components/Editor';
 import Viewer from './components/Viewer';

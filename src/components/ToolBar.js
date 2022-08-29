@@ -1,8 +1,8 @@
 import "../App.css";
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import { useStore } from "../utils/store";
 
-import { ReactComponent as BtSettings } from "../imgs/settings.svg";
+// import { ReactComponent as BtSettings } from "../imgs/settings.svg";
 import { ReactComponent as BtGeoCube } from "../imgs/cube.svg";
 import { ReactComponent as BtGeoPlane } from "../imgs/plane.svg";
 import { ReactComponent as BtGeoSphere } from "../imgs/sphere.svg";
@@ -11,8 +11,8 @@ import { ReactComponent as BtGeoTorus } from "../imgs/torus.svg";
 import { ReactComponent as BtGeoFrag } from "../imgs/frag.svg";
 
 import { ReactComponent as BtGrid } from "../imgs/grid.svg";
-import { ReactComponent as BtDownload } from "../imgs/download.svg";
-import { ReactComponent as BtUpload } from "../imgs/upload.svg";
+// import { ReactComponent as BtDownload } from "../imgs/download.svg";
+// import { ReactComponent as BtUpload } from "../imgs/upload.svg";
 import { ReactComponent as BtOrbit } from "../imgs/orbit.svg";
 import { ReactComponent as BtScreenShot } from "../imgs/screenShot.svg";
 
@@ -54,71 +54,71 @@ function SubMenu(props) {
 	);
 }
 
-function Uniform(props){
-	return(
-		<div className="tb_uniform">
-			<div className="tb_uniformType">{props.type}&nbsp;</div>
-			<div className="tb_uniformName">{props.name}</div>
-			<div>
-				({props.value.map((v,i)=>{
-					return <UniformVal key={i} v={v} i={i} l={props.value.length} readonly={props.readonly} />;
-				})})
-			</div>
-		</div>
-	)
-}
+// function Uniform(props){
+// 	return(
+// 		<div className="tb_uniform">
+// 			<div className="tb_uniformType">{props.type}&nbsp;</div>
+// 			<div className="tb_uniformName">{props.name}</div>
+// 			<div>
+// 				({props.value.map((v,i)=>{
+// 					return <UniformVal key={i} v={v} i={i} l={props.value.length} readonly={props.readonly} />;
+// 				})})
+// 			</div>
+// 		</div>
+// 	)
+// }
 
-function UniformVal(props){
-	const [value, setValue] = useState(props.v);
-	const [coords, setCoords] = useState({ x: 0, y: 0 });
-  	const [width, setWidth] = useState(0);
-	const span = useRef();
+// function UniformVal(props){
+// 	const [value, setValue] = useState(props.v);
+// 	const [coords, setCoords] = useState({ x: 0, y: 0 });
+//   	const [width, setWidth] = useState(0);
+// 	const span = useRef();
 
-	// const initMove = (event) => {
-	// 	setCoords({ x: event.clientX, y: event.clientY })
-	// 	// setDims({ width: resize.horizontal, height: resize.vertical })
-	// }
+// 	// const initMove = (event) => {
+// 	// 	setCoords({ x: event.clientX, y: event.clientY })
+// 	// 	// setDims({ width: resize.horizontal, height: resize.vertical })
+// 	// }
 	
-	useEffect(() => {
-		setWidth(span.current.offsetWidth);
-	}, [value, width]);
+// 	useEffect(() => {
+// 		setWidth(span.current.offsetWidth);
+// 	}, [value, width]);
 
-	const startDrag = (event) => {
-		event.preventDefault();
-		const shift = event.shiftKey ? 40 : 400;
-		const drag = (coords.y - event.clientY) / shift;
-		setValue((Number(value) + Number(drag)).toFixed(2));
-	}
-	const stopDrag = () => {
-		document.removeEventListener('mousemove', startDrag, false)
-        document.removeEventListener('mouseup', stopDrag, false)
-	}
-	const click = (event) => {
-		// event.preventDefault();
-		setCoords({ x: event.clientX, y: event.clientY })
-		document.addEventListener('mousemove', startDrag, false)
-        document.addEventListener('mouseup', stopDrag, false)
-	}
-	const handleChange = event => {
-		const result = event.target.value
-			.replace(/[^0-9\.]/g, '')
-			.replace(/\./, "x")
-  			.replace(/\./g, "")
-  			.replace(/x/, ".");
-		setValue(result);
-	};
+// 	const startDrag = (event) => {
+// 		event.preventDefault();
+// 		const shift = event.shiftKey ? 40 : 400;
+// 		const drag = (coords.y - event.clientY) / shift;
+// 		setValue((Number(value) + Number(drag)).toFixed(2));
+// 	}
+// 	const stopDrag = () => {
+// 		document.removeEventListener('mousemove', startDrag, false)
+//         document.removeEventListener('mouseup', stopDrag, false)
+// 	}
+// 	const click = (event) => {
+// 		// event.preventDefault();
+// 		setCoords({ x: event.clientX, y: event.clientY })
+// 		document.addEventListener('mousemove', startDrag, false)
+//         document.addEventListener('mouseup', stopDrag, false)
+// 	}
+// 	const handleChange = event => {
+// 		const result = event.target.value
+// 			.replace(/[^0-9.]/g, '')
+// 			.replace(/\./, "x")
+//   			.replace(/\./g, "")
+//   			.replace(/x/, ".");
+// 		setValue(result);
+// 	};
 
-	return(
-		<>
-			<span className="tb_uniformValTemp" ref={span}>{value}</span>
-			<input type="text" value={value} style={{ width }} onChange={handleChange} className="tb_uniformVal" readOnly={props.readonly} onMouseDown={props.readonly ? null : click} />
-			{props.l - props.i > 1 ? <span>,</span> : null}
-		</>
-	)
-}
+// 	return(
+// 		<>
+// 			<span className="tb_uniformValTemp" ref={span}>{value}</span>
+// 			<input type="text" value={value} style={{ width }} onChange={handleChange} className="tb_uniformVal" readOnly={props.readonly} onMouseDown={props.readonly ? null : click} />
+// 			{props.l - props.i > 1 ? <span>,</span> : null}
+// 		</>
+// 	)
+// }
 
 function Button(props) {
-	const [showSubMenu, setShowSubMenu] = useState(false);
+	// const [showSubMenu, setShowSubMenu] = useState(false);
 	// const [active, setActive] = useState(false)
 
 	function ClickButton(param) {
