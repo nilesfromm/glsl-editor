@@ -3,7 +3,8 @@ import { useStore } from "../utils/store";
 // let originalConsoleError;
 
 export function ErrorLog(gl) {
-	const { setError } = useStore();
+	const setError = useStore(state => state.setError);
+	
 	// originalConsoleError = console.error.bind(gl);
   
 	console.error = function (
@@ -32,26 +33,18 @@ function interceptConsoleError(log, errorLog) {
 	for (_i = 0, _len = lines.length; _i < _len; _i++) {
 		i = lines[_i];
 		if (i.substr(0, 16) === "Program Info Log") {
-			if (lines[_i + 1]) {
-				if (lines[_i + 1] === "VERTEX") {
-					shader = "VERTEX";
-				} else if (lines[_i + 1] === "FRAGMENT") {
-					shader = "FRAGMENT";
-				} else {
-					// alert("Error: unable to parse shader type.");
-				}
-			} else {
-				if (lines[_i + 2] === "VERTEX") {
-					shader = "VERTEX";
-				} else if (lines[_i + 2] === "FRAGMENT") {
-					shader = "FRAGMENT";
-				} else {
-					// alert("Error: unable to parse shader type.");
-				}
+			console.log(_i, i);
+			if(lines[_i].includes('Fragment')){
+				shader = "FRAGMENT";
+			} else if(lines[_i].includes('Vertex')){
+				shader = "VERTEX";
+		 	} else {
+				// alert("Error: unable to parse shader type.");
 			}
 		}
-
-		if (i.substr(0, 5) === "ERROR") {
+	
+		if (!error && i.substr(0, 5) === "ERROR") {
+			console.log(_i, i);
 			error = i;
 		}
 	}
@@ -62,7 +55,7 @@ function interceptConsoleError(log, errorLog) {
 	if (details.length < 4) {
 		console.log("Unable to parse error. (less than 4)");
 	}
-	details[2] = parseInt(details[2]) - 59 - 68 * (shader === "VERTEX" ? 0 : 1);
+	details[2] = parseInt(details[2]) - 57 - 68 * (shader === "VERTEX" ? 0 : 1);
 	message = details.splice(0).join(":");
 
 	let e = {

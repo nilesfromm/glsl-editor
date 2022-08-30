@@ -12,7 +12,7 @@ import { ErrorLog } from "../utils/error";
 
 function Geo(props) {
   const { vertFlat, vert, frag } = useStore()
-  const flat = useStore((state) => state.toolbar.flat);
+  const flat = useStore((state) => state.tbFlat);
 //   const controls = useThree(state => state.controls)
 	const matRef = useRef();
 	// const [hovered, setHover] = useState(false);
@@ -86,10 +86,10 @@ function Geo(props) {
 // }
 
 function Viewer() {
-	const currentGeo = useStore((state) => state.toolbar.geometry);
-	const currentOrbit = useStore((state) => state.toolbar.orbit);
-	const flat = useStore((state) => state.toolbar.flat);
-	const currentGrid = useStore((state) => state.toolbar.grid);
+	const currentGeo = useStore((state) => state.tbGeometry);
+	const currentOrbit = useStore((state) => state.tbOrbit);
+	const flat = useStore((state) => state.tbFlat);
+	const currentGrid = useStore((state) => state.tbGrid);
   	const orbitRef = useRef();
 	const canvasRef = useRef();
 	//onClick={() => screenShot(canvasRef)}
@@ -98,13 +98,12 @@ function Viewer() {
 	// 	scene: null,
 	// 	camera: null
 	// }
-	console.log('loading viewer:')
 	let store = useStore((state)=>state);
-	console.log(store);
+	console.log('render viewer');
 	return (
 		<div id="viewPanel">
 			<div id="canvasContainer">
-				{useStore((state) => state.errorLog.run) ? "" : <Error />}
+				 {useStore((state) => state.errorLog.run) ? "" : <Error />}
 				<ToolBar 
           			orbitRef={orbitRef}
 					canvasRef={canvasRef}

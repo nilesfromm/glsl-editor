@@ -197,7 +197,12 @@ function Button(props) {
 }
 
 function ToolBar(props) {
-	const { setGeometry, setFlat, setGrid, setOrbit } = useStore();
+	// const { setGeometry, setFlat, setGrid, setOrbit } = useStore();
+	const setGeometry = useStore(state => state.setGeometry);
+	const setFlat = useStore(state => state.setFlat);
+	const setGrid = useStore(state => state.setGrid);
+	const setOrbit = useStore(state => state.setOrbit);
+
 	const downloadRef = useRef();
 	// let grid = useStore(state => state.toolbar.grid);
 
@@ -236,7 +241,7 @@ function ToolBar(props) {
 			<SubMenu interaction='hover'>
 				<Button
 					name="2d"
-					current={useStore((state) => state.toolbar.geometry)}
+					current={useStore((state) => state.tbGeometry)}
 					control={setGeometry}
 					flat={setFlat}
 					orbitRef={props.orbitRef}
@@ -245,7 +250,7 @@ function ToolBar(props) {
 				</Button>
 				<Button
 					name="plane"
-					current={useStore((state) => state.toolbar.geometry)}
+					current={useStore((state) => state.tbGeometry)}
 					control={setGeometry}
 					flat={setFlat}
 					orbitRef={props.orbitRef}
@@ -254,7 +259,7 @@ function ToolBar(props) {
 				</Button>
 				<Button
 					name="torus"
-					current={useStore((state) => state.toolbar.geometry)}
+					current={useStore((state) => state.tbGeometry)}
 					control={setGeometry}
 					flat={setFlat}
 					orbitRef={props.orbitRef}
@@ -263,7 +268,7 @@ function ToolBar(props) {
 				</Button>
 				<Button
 					name="cylinder"
-					current={useStore((state) => state.toolbar.geometry)}
+					current={useStore((state) => state.tbGeometry)}
 					control={setGeometry}
 					flat={setFlat}
 					orbitRef={props.orbitRef}
@@ -272,7 +277,7 @@ function ToolBar(props) {
 				</Button>
 				<Button
 					name="sphere"
-					current={useStore((state) => state.toolbar.geometry)}
+					current={useStore((state) => state.tbGeometry)}
 					control={setGeometry}
 					flat={setFlat}
 					orbitRef={props.orbitRef}
@@ -281,7 +286,7 @@ function ToolBar(props) {
 				</Button>
 				<Button
 					name="cube"
-					current={useStore((state) => state.toolbar.geometry)}
+					current={useStore((state) => state.tbGeometry)}
 					control={setGeometry}
 					flat={setFlat}
 					orbitRef={props.orbitRef}
@@ -291,14 +296,14 @@ function ToolBar(props) {
 			</SubMenu>
 			<Button
 				name="orbit"
-				current={useStore((state) => state.toolbar.orbit)}
+				current={useStore((state) => state.tbOrbit)}
 				control={setOrbit}
 			>
 				<BtOrbit />
 			</Button>
 			<Button
 				name="grid"
-				current={useStore((state) => state.toolbar.grid)}
+				current={useStore((state) => state.tbGrid)}
 				control={setGrid}
 			>
 				<BtGrid />

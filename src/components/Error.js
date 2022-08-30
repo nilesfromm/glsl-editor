@@ -4,7 +4,7 @@ import { useStore } from '../utils/store'
 import { ReactComponent as ErrorIcon } from '../imgs/error.svg';
 
 function Error() {
-    const { errorLog } = useStore();
+    const errorLog = useStore(state => state.errorLog);
 
     return (
         <div id="error_wrapper">

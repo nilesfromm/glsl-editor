@@ -1,4 +1,5 @@
 import create from "zustand"
+import produce from "immer"
 
 const detent = (_string)=>{
 	const regex = new RegExp(`^[ \\t]{4}`, 'gm');
@@ -12,64 +13,62 @@ export const useStore = create(set => ({
 
     //---------------------------------------------------------------------------------------------------
     //Resize UI(%)
-    resize: {
-        horizontal: 66,
-        vertical:   50,
-    },
+
+    resizeHorizontal:   getLocalStorage("resizeHorizontal") || 66,
+    resizeVertical:     getLocalStorage("resizeVertical") || 50,
 
     setHorizontal: (v)=>{
-        set((state) => {
-            // setLocalStorage("resizeHorizontal", v);
-            state.resize.horizontal = v;
-        })
+        setLocalStorage("resizeHorizontal", v)
+        set({ resizeHorizontal: v })
     },
 
     setVertical: (v)=>{
-        set((state) => {
-            // setLocalStorage("resizeVertical", v);
-            state.resize.vertical = v;
-        })
+        setLocalStorage("resizeVertical", v)
+        set({ resizeVertical: v })
     },
 
-    //---------------------------------------------------------------------------------------------------
-    //Tool Bar Data
-    toolbar: {
-        geometry:   getLocalStorage("tbGeometry") || "cube",
-        flat:       getLocalStorage("tbFlat") || false,  
-        grid:       Object.keys(window.localStorage).includes("tbGrid") ? getLocalStorage("tbGrid") : true,
-        orbit:      Object.keys(window.localStorage).includes("tbOrbit") ? getLocalStorage("tbOrbit") : true,
-    },
+    // //---------------------------------------------------------------------------------------------------
+    // //Tool Bar Data
+    tbGeometry:   getLocalStorage("tbGeometry") || "cube",
+    tbFlat:       getLocalStorage("tbFlat") || false,  
+    tbGrid:       Object.keys(window.localStorage).includes("tbGrid") ? getLocalStorage("tbGrid") : true,
+    tbOrbit:      Object.keys(window.localStorage).includes("tbOrbit") ? getLocalStorage("tbOrbit") : true,
 
     setGeometry: (v)=>{
-        set((state) => {
-            setLocalStorage("tbGeometry", v);
-            state.toolbar.geometry = v;
-        });
+        setLocalStorage("tbGeometry", v);
+        set({ tbGeometry: v })
+        // set(produce((state) => { 
+        //     state.toolbar.geometry = v;
+        // }));
     },
 
     setFlat: (v)=>{
-        set((state) => {
-            setLocalStorage("tbFlat", v);
-            state.toolbar.flat = v;
-        });
+        setLocalStorage("tbFlat", v);
+        set({ tbFlat: v })
+        // set(produce((state) => { 
+        //     state.toolbar.flat = v;
+        // }));
     },
 
     setGrid: (v)=>{
-        set((state) => {
-            setLocalStorage("tbGrid", v);
-            state.toolbar.grid = v;
-        });
+        setLocalStorage("tbGrid", v);
+        set({ tbGrid: v })
+        // set(produce((state) => { 
+        //     state.toolbar.grid = v;
+        // }));
     },
 
     setOrbit: (v)=>{
-        set((state) => {
-            setLocalStorage("tbOrbit", v);
-            state.toolbar.orbit = v;
-        });
+        setLocalStorage("tbOrbit", v);
+        set({ tbOrbit: v })
+        // set(produce((state) => { 
+        //     state.toolbar.orbit = v;
+        // }));
     },
 
-    //---------------------------------------------------------------------------------------------------
-    //Error Log Data
+    // //---------------------------------------------------------------------------------------------------
+    // //Error Log Data
+   
     errorLog: {
         run:        true,
         shader:     "VERTEX",
@@ -77,7 +76,8 @@ export const useStore = create(set => ({
     },
 
     setError: (v)=>{
-        set(state=>state.errorLog = v);
+        console.log(v);
+        set({ errorLog: v });
     },
 
     //---------------------------------------------------------------------------------------------------
@@ -154,24 +154,28 @@ export const useStore = create(set => ({
     }`),
 
     setVertFlat: (v)=>{
-        set(state=>state.vertFlat = v);
-        set(state=>state.errorLog.run = true);
+        set({ vertFlat: v });
+        set(produce((state) => { 
+            state.errorLog.run = true 
+        }));
     },
 
     setVert: (v)=>{
-        set((state) => {
-            setLocalStorage("vert", v);
-            state.vert = v;
-        });
-        set(state=>state.errorLog.run = true);
+        console.log('set vert')
+        setLocalStorage("vert", v);
+        set({ vert: v });
+        set(produce((state) => { 
+            state.errorLog.run = true 
+        }));
     },
 
     setFrag: (v)=>{
-        set((state) => {
-            setLocalStorage("frag", v);
-            state.frag = v;
-        });
-        set(state=>state.errorLog.run = true);
+        console.log('set frag')
+        setLocalStorage("vert", v);
+        set({ frag: v });
+        set(produce((state) => { 
+            state.errorLog.run = true 
+        }));
     },
 
 }))
